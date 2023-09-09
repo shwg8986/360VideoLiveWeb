@@ -7,14 +7,14 @@ let video, texture, mesh, controls;
 function init() {
   console.log("init");
 
-  const constraints = { video: true, audio: true };
+  // const constraints = { video: true, audio: true };
 
-  try {
-    const stream = navigator.mediaDevices.getUserMedia(constraints);
-    video.srcObject = stream;
-  } catch (error) {
-    console.error("Error accessing webcam:", error);
-  }
+  // try {
+  //   const stream = navigator.mediaDevices.getUserMedia(constraints);
+  //   video.srcObject = stream;
+  // } catch (error) {
+  //   console.error("Error accessing webcam:", error);
+  // }
 
   scene = new THREE.Scene();
   const container = document.createElement("div");
@@ -93,20 +93,39 @@ async function connectToSora() {
   const options = { multistream: true };
   const recvonly = sora.recvonly(channelId, metadata, options);
 
+  // recvonly.on("track", (event) => {
+  //   console.log("Received Video.");
+  //   document.getElementById("noVideoMessage").style.display = "none";
+  //   const remoteStream = event.streams[0];
+  //   video.srcObject = remoteStream;
+  //   video.onloadeddata = () => {
+  //     video.play().catch((error) => console.error("Play video error:", error));
+  //     const startButton = document.getElementById("startButton");
+  //     startButton.style.display = "block"; // 映像が配信されたらボタンを表示する
+  //     startButton.addEventListener("click", () => {
+  //       startButton.style.display = "none"; // スタートボタンを非表示にする
+  //       init();
+  //     });
+  //   };
+  // });
+
+  const startButton = document.getElementById("startButton");
+  let remoteStream;
+
   recvonly.on("track", (event) => {
     console.log("Received Video.");
     document.getElementById("noVideoMessage").style.display = "none";
-    const remoteStream = event.streams[0];
+    remoteStream = event.streams[0];
+    startButton.style.display = "block"; // 映像が配信されたらボタンを表示する
+  });
+
+  startButton.addEventListener("click", () => {
+    startButton.style.display = "none"; // スタートボタンを非表示にする
     video.srcObject = remoteStream;
     video.onloadeddata = () => {
       video.play().catch((error) => console.error("Play video error:", error));
-      const startButton = document.getElementById("startButton");
-      startButton.style.display = "block"; // 映像が配信されたらボタンを表示する
-      startButton.addEventListener("click", () => {
-        startButton.style.display = "none"; // スタートボタンを非表示にする
-        init();
-      });
     };
+    init();
   });
 
   recvonly.on("removetrack", (event) => {
