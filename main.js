@@ -82,6 +82,7 @@ async function connectToSora() {
   video.crossOrigin = "anonymous";
   video.loop = true;
   video.muted = true;
+  video.playsInline = true; // この行を追加しないとiOS Safariで動画が再生されない
 
   const debug = false;
   const sora = Sora.connection(
