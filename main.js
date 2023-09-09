@@ -1,5 +1,5 @@
 import * as THREE from "/360VideoLiveWeb/build/three.module.js";
-import { OrbitControls } from "./controls/OrbitControls.js";
+import { OrbitControls } from "360VideoLiveWeb/controls/OrbitControls.js";
 
 ("use strict");
 
