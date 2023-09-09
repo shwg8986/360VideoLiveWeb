@@ -69,7 +69,7 @@ function init() {
 }
 
 function animate() {
-  console.log("animate");
+  // console.log("animate");
   requestAnimationFrame(animate);
   controls.update();
   renderer.render(scene, camera);
