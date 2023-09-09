@@ -120,6 +120,7 @@ async function connectToSora() {
   });
 
   startButton.addEventListener("click", () => {
+    console.log("Start button was pushed !");
     startButton.style.display = "none"; // スタートボタンを非表示にする
     video.srcObject = remoteStream;
     video.onloadeddata = () => {
