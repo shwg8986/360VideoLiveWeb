@@ -6,6 +6,16 @@ let video, texture, mesh, controls;
 
 function init() {
   console.log("init");
+
+  const constraints = { video: true, audio: true };
+
+  try {
+    const stream = navigator.mediaDevices.getUserMedia(constraints);
+    video.srcObject = stream;
+  } catch (error) {
+    console.error("Error accessing webcam:", error);
+  }
+
   scene = new THREE.Scene();
   const container = document.createElement("div");
   document.body.appendChild(container);
@@ -59,7 +69,7 @@ function init() {
 }
 
 function animate() {
-  // console.log("animate");
+  console.log("animate");
   requestAnimationFrame(animate);
   controls.update();
   renderer.render(scene, camera);
@@ -72,15 +82,6 @@ async function connectToSora() {
   video.crossOrigin = "anonymous";
   video.loop = true;
   video.muted = true;
-
-  const constraints = { video: true, audio: true };
-
-  try {
-    const stream = await navigator.mediaDevices.getUserMedia(constraints);
-    video.srcObject = stream;
-  } catch (error) {
-    console.error("Error accessing webcam:", error);
-  }
 
   const debug = false;
   const sora = Sora.connection(
