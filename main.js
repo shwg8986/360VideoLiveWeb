@@ -73,6 +73,15 @@ async function connectToSora() {
   video.loop = true;
   video.muted = true;
 
+  const constraints = { video: true, audio: true };
+
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia(constraints);
+    video.srcObject = stream;
+  } catch (error) {
+    console.error("Error accessing webcam:", error);
+  }
+
   const debug = false;
   const sora = Sora.connection(
     "wss://sora.ikeilabsora.0am.jp/signaling",
