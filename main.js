@@ -1,12 +1,11 @@
 import * as THREE from "/360VideoLiveWeb/build/three.module.js";
 import { OrbitControls } from "/360VideoLiveWeb/controls/OrbitControls.js";
 
-("use strict");
-
 let camera, scene, renderer;
 let video, texture, mesh, controls;
 
 function init() {
+  console.log("init");
   scene = new THREE.Scene();
   const container = document.createElement("div");
   document.body.appendChild(container);
@@ -23,16 +22,16 @@ function init() {
   camera.position.set(0, 0, 100);
 
   // カメラの注視点を設定（ビデオテクスチャの位置）
-  // camera.lookAt(0, 0, 0);
-  camera.lookAt(scene.position);
+  camera.lookAt(0, 0, 0);
+  // camera.lookAt(scene.position);
 
   const geometry = new THREE.SphereBufferGeometry(500, 60, 40);
   geometry.scale(-1, 1, 1);
 
-  video = document.createElement("video");
-  video.crossOrigin = "anonymous";
-  video.loop = true;
-  video.muted = true;
+  // video = document.createElement("video");
+  // video.crossOrigin = "anonymous";
+  // video.loop = true;
+  // video.muted = true;
 
   texture = new THREE.VideoTexture(video);
   texture.format = THREE.RGBFormat;
@@ -47,29 +46,33 @@ function init() {
   renderer.setSize(window.innerWidth, window.innerHeight);
   container.appendChild(renderer.domElement);
 
-  // 座標軸を表示
-  // const axes = new THREE.AxesHelper(1500);
-  // axes.position.x = 0;
-  // scene.add(axes); //x 軸は赤, y 軸は緑, z 軸は青
-
   controls = new OrbitControls(camera, renderer.domElement);
   controls.enableZoom = true;
-  controls.enablePan = false; // パン操作を無効化
+  // controls.enablePan = false; // パン操作を無効化
   controls.enableDamping = true; // 滑らかにカメラコントローラーを制御する
   controls.dampingFactor = 0.2;
   controls.minDistance = 0.1;
   controls.maxDistance = 2000;
 
-  document.getElementById("noVideoMessage").style.display = "block";
+  // document.getElementById("noVideoMessage").style.display = "block";
+  animate();
 }
 
 function animate() {
+  console.log("animate");
   requestAnimationFrame(animate);
   controls.update();
   renderer.render(scene, camera);
 }
 
 async function connectToSora() {
+  // document.getElementById("noVideoMessage").style.display = "none";
+  // document.getElementById("startButton").style.display = "none"; // スタートボタンを非表示にする
+  video = document.createElement("video");
+  video.crossOrigin = "anonymous";
+  video.loop = true;
+  video.muted = true;
+
   const debug = false;
   const sora = Sora.connection(
     "wss://sora.ikeilabsora.0am.jp/signaling",
@@ -81,11 +84,18 @@ async function connectToSora() {
   const recvonly = sora.recvonly(channelId, metadata, options);
 
   recvonly.on("track", (event) => {
+    console.log("Received Video.");
     document.getElementById("noVideoMessage").style.display = "none";
     const remoteStream = event.streams[0];
     video.srcObject = remoteStream;
     video.onloadeddata = () => {
       video.play().catch((error) => console.error("Play video error:", error));
+      const startButton = document.getElementById("startButton");
+      startButton.style.display = "block"; // 映像が配信されたらボタンを表示する
+      startButton.addEventListener("click", () => {
+        startButton.style.display = "none"; // スタートボタンを非表示にする
+        init();
+      });
     };
   });
 
@@ -93,16 +103,18 @@ async function connectToSora() {
     const target = event.target;
     if (target.getTracks().length === 0) {
       document.getElementById("noVideoMessage").style.display = "block";
-      scene.remove(mesh);
+      location.reload();
     }
   });
 
   await recvonly.connect();
 
   console.log("Connected to Sora");
+
+  // init();
 }
 window.onload = function () {
-  init();
-  animate();
+  // init();
+  // animate();
   connectToSora();
 };
