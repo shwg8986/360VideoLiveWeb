@@ -57,12 +57,12 @@ function init() {
   container.appendChild(renderer.domElement);
 
   controls = new OrbitControls(camera, renderer.domElement);
-  controls.enableZoom = true;
+  controls.enableZoom = false;
   // controls.enablePan = false; // パン操作を無効化
   controls.enableDamping = true; // 滑らかにカメラコントローラーを制御する
   controls.dampingFactor = 0.2;
-  controls.minDistance = 0.1;
-  controls.maxDistance = 2000;
+  // controls.minDistance = 0.1;
+  // controls.maxDistance = 2000;
 
   // document.getElementById("noVideoMessage").style.display = "block";
   animate();
