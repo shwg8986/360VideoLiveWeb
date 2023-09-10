@@ -55,6 +55,8 @@ function init() {
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setClearColor(0xefefef);
   renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.xr.enabled = true;
+  document.body.appendChild(VRButton.createButton(renderer));
   container.appendChild(renderer.domElement);
 
   controls = new OrbitControls(camera, renderer.domElement);
@@ -66,14 +68,14 @@ function init() {
   // controls.maxDistance = 2000;
 
   // WebXR APIが利用可能かどうかを確認し、利用可能な場合にはVRモードを有効化
-  if ("XR" in navigator) {
-    renderer.xr.enabled = true;
-    document.body.appendChild(VRButton.createButton(renderer));
-    console.log("XR is supported.");
-  } else {
-    console.log("XR is not supported.");
-    console.log("ユーザーの端末情報は、", navigator.userAgent);
-  }
+  // if ("XR" in navigator) {
+  //   renderer.xr.enabled = true;
+  //   document.body.appendChild(VRButton.createButton(renderer));
+  //   console.log("XR is supported.");
+  // } else {
+  //   console.log("XR is not supported.");
+  //   console.log("ユーザーの端末情報は、", navigator.userAgent);
+  // }
 
   // document.getElementById("noVideoMessage").style.display = "block";
   animate();
