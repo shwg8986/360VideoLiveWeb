@@ -30,7 +30,7 @@ function init() {
   camera.target = new THREE.Vector3(0, 0, 0);
 
   // カメラの初期位置を設定
-  camera.position.set(0, 0, 100);
+  camera.position.set(0, 0, 0.1);
 
   // カメラの注視点を設定（ビデオテクスチャの位置）
   camera.lookAt(0, 0, 0);
