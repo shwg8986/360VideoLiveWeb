@@ -31,6 +31,7 @@ function init() {
 
   // カメラの初期位置を設定
   camera.position.set(0, 0, 0.1);
+  console.log("camera.position", camera.position);
 
   // カメラの注視点を設定（ビデオテクスチャの位置）
   camera.lookAt(0, 0, 0);
