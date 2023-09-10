@@ -89,7 +89,7 @@ async function connectToSora() {
     "wss://sora.ikeilabsora.0am.jp/signaling",
     debug
   );
-  const channelId = "SimpleView-Right";
+  const channelId = "SimpleView";
   const metadata = undefined;
   const options = { 
     multistream: true,
