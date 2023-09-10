@@ -69,6 +69,10 @@ function init() {
   if ("XR" in navigator) {
     renderer.xr.enabled = true;
     document.body.appendChild(VRButton.createButton(renderer));
+    console.log("XR is supported.");
+  } else {
+    console.log("XR is not supported.");
+    console.log("ユーザーの端末情報は、", navigator.userAgent);
   }
 
   // document.getElementById("noVideoMessage").style.display = "block";
