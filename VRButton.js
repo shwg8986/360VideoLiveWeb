@@ -93,7 +93,7 @@ class VRButton {
         exception
       );
 
-      button.textContent = "VR NOT ALLOWED";
+      button.textContent = "Your device is not supported WebXR.";
     }
 
     function stylizeElement(element) {
@@ -137,7 +137,7 @@ class VRButton {
         message.innerHTML = "WEBXR NEEDS HTTPS"; // TODO Improve message
       } else {
         message.href = "https://immersiveweb.dev/";
-        message.innerHTML = "WEBXR NOT AVAILABLE";
+        message.innerHTML = "Your device is not supported WebXR.";
       }
 
       message.style.left = "calc(50% - 90px)";
