@@ -8,15 +8,6 @@ let video, texture, mesh, controls;
 function init() {
   console.log("init");
 
-  // const constraints = { video: true, audio: true };
-
-  // try {
-  //   const stream = navigator.mediaDevices.getUserMedia(constraints);
-  //   video.srcObject = stream;
-  // } catch (error) {
-  //   console.error("Error accessing webcam:", error);
-  // }
-
   scene = new THREE.Scene();
   const container = document.createElement("div");
   document.body.appendChild(container);
@@ -30,7 +21,7 @@ function init() {
   camera.target = new THREE.Vector3(0, 0, 0);
 
   // カメラの初期位置を設定
-  camera.position.set(0, 0, 0.1);
+  camera.position.set(0, 0, 501);
   console.log("camera.position", camera.position);
 
   // カメラの注視点を設定（ビデオテクスチャの位置）
@@ -39,11 +30,6 @@ function init() {
 
   const geometry = new THREE.SphereBufferGeometry(500, 60, 40);
   geometry.scale(-1, 1, 1);
-
-  // video = document.createElement("video");
-  // video.crossOrigin = "anonymous";
-  // video.loop = true;
-  // video.muted = true;
 
   texture = new THREE.VideoTexture(video);
   texture.format = THREE.RGBFormat;
@@ -61,7 +47,7 @@ function init() {
   container.appendChild(renderer.domElement);
 
   controls = new OrbitControls(camera, renderer.domElement);
-  controls.enableZoom = false;
+  controls.enableZoom = false; // ズーム操作を無効化
   // controls.enablePan = false; // パン操作を無効化
   controls.enableDamping = true; // 滑らかにカメラコントローラーを制御する
   controls.dampingFactor = 0.2;
@@ -78,7 +64,6 @@ function init() {
   //   console.log("ユーザーの端末情報は、", navigator.userAgent);
   // }
 
-  // document.getElementById("noVideoMessage").style.display = "block";
   animate();
 }
 
@@ -90,8 +75,6 @@ function animate() {
 }
 
 async function connectToSora() {
-  // document.getElementById("noVideoMessage").style.display = "none";
-  // document.getElementById("startButton").style.display = "none"; // スタートボタンを非表示にする
   video = document.createElement("video");
   video.crossOrigin = "anonymous";
   video.loop = true;
@@ -111,22 +94,6 @@ async function connectToSora() {
     audioBitRate: 64, // オーディオのビットレートを 64 kbps に設定
   };
   const recvonly = sora.recvonly(channelId, metadata, options);
-
-  // recvonly.on("track", (event) => {
-  //   console.log("Received Video.");
-  //   document.getElementById("noVideoMessage").style.display = "none";
-  //   const remoteStream = event.streams[0];
-  //   video.srcObject = remoteStream;
-  //   video.onloadeddata = () => {
-  //     video.play().catch((error) => console.error("Play video error:", error));
-  //     const startButton = document.getElementById("startButton");
-  //     startButton.style.display = "block"; // 映像が配信されたらボタンを表示する
-  //     startButton.addEventListener("click", () => {
-  //       startButton.style.display = "none"; // スタートボタンを非表示にする
-  //       init();
-  //     });
-  //   };
-  // });
 
   const startButton = document.getElementById("startButton");
   let remoteStream;
@@ -160,10 +127,7 @@ async function connectToSora() {
 
   console.log("Connected to Sora");
 
-  // init();
 }
 window.onload = function () {
-  // init();
-  // animate();
   connectToSora();
 };
