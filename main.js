@@ -81,7 +81,7 @@ async function connectToSora() {
   video = document.createElement("video");
   video.crossOrigin = "anonymous";
   video.loop = true;
-  video.muted = true;
+  video.muted = false;
   video.playsInline = true; // この行を追加しないとiOS Safariで動画が再生されない
 
   const debug = false;
@@ -91,7 +91,11 @@ async function connectToSora() {
   );
   const channelId = "SimpleView-Right";
   const metadata = undefined;
-  const options = { multistream: true };
+  const options = { 
+    multistream: true,
+    audio: true,
+    audioBitRate: 64, // オーディオのビットレートを 64 kbps に設定
+  };
   const recvonly = sora.recvonly(channelId, metadata, options);
 
   // recvonly.on("track", (event) => {
