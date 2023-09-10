@@ -82,7 +82,7 @@ class VRButton {
     function showWebXRNotFound() {
       disableButton();
 
-      button.textContent = "VR NOT SUPPORTED";
+      button.textContent = "Your device is not supported WebXR.";
     }
 
     function showVRNotAllowed(exception) {
