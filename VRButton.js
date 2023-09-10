@@ -82,7 +82,7 @@ class VRButton {
     function showWebXRNotFound() {
       disableButton();
 
-      button.textContent = "Your device is not supported WebXR.";
+      button.textContent = "Your device is not supported WebVR.";
     }
 
     function showVRNotAllowed(exception) {
@@ -93,7 +93,7 @@ class VRButton {
         exception
       );
 
-      button.textContent = "Your device is not supported WebXR.";
+      button.textContent = "Your device is not supported WebVR.";
     }
 
     function stylizeElement(element) {
