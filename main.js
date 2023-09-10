@@ -1,5 +1,6 @@
 import * as THREE from "/360VideoLiveWeb/build/three.module.js";
 import { OrbitControls } from "/360VideoLiveWeb/controls/OrbitControls.js";
+import { VRButton } from "./VRButton.js"; // VRButtonをインポート
 
 let camera, scene, renderer;
 let video, texture, mesh, controls;
@@ -63,6 +64,12 @@ function init() {
   controls.dampingFactor = 0.2;
   // controls.minDistance = 0.1;
   // controls.maxDistance = 2000;
+
+  // WebXR APIが利用可能かどうかを確認し、利用可能な場合にはVRモードを有効化
+  if ("XR" in navigator) {
+    renderer.xr.enabled = true;
+    document.body.appendChild(VRButton.createButton(renderer));
+  }
 
   // document.getElementById("noVideoMessage").style.display = "block";
   animate();
