@@ -89,7 +89,7 @@ async function connectToSora() {
   const sora = Sora.connection(
     // "wss://sora.ikeilabsora.0am.jp/signaling",
     // "wss://u1.xr360d.net/signaling",
-    "ws://192.168.11.64.5000/signaling",
+    "ws://192.168.11.64:5000/signaling",
     debug
   );
   const channelId = "SimpleView";
