@@ -82,7 +82,7 @@ class VRButton {
     function showWebXRNotFound() {
       disableButton();
 
-      button.textContent = "Your device is not supported WebVR.";
+      button.textContent = "WebVR is not supported on your device.";
     }
 
     function showVRNotAllowed(exception) {
@@ -93,7 +93,7 @@ class VRButton {
         exception
       );
 
-      button.textContent = "Your device is not supported WebVR.";
+      button.textContent = "WebVR is not supported on your device";
     }
 
     function stylizeElement(element) {
@@ -137,7 +137,7 @@ class VRButton {
         message.innerHTML = "WEBXR NEEDS HTTPS"; // TODO Improve message
       } else {
         message.href = "https://immersiveweb.dev/";
-        message.innerHTML = "Your device is not supported WebXR.";
+        message.innerHTML = "WebVR is not supported on your device";
       }
 
       message.style.left = "calc(50% - 90px)";
