@@ -69,9 +69,13 @@ function init() {
 
 function animate() {
   // console.log("animate");
-  requestAnimationFrame(animate);
+  // requestAnimationFrame(animate);
+  // controls.update();
+  // renderer.render(scene, camera);
+  renderer.setAnimationLoop(function () {
+    renderer.render(scene, camera);
+  });
   controls.update();
-  renderer.render(scene, camera);
 }
 
 async function connectToSora() {
