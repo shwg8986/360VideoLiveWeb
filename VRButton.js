@@ -9,7 +9,7 @@ class VRButton {
         session.addEventListener("end", onSessionEnded);
 
         await renderer.xr.setSession(session);
-        button.textContent = "EXIT VR";
+        button.textContent = "EXIT VR"; //VRモードから脱出
 
         currentSession = session;
       }
@@ -17,7 +17,7 @@ class VRButton {
       function onSessionEnded(/*event*/) {
         currentSession.removeEventListener("end", onSessionEnded);
 
-        button.textContent = "ENTER VR";
+        button.textContent = "ENTER VR"; //VRモードに変更
 
         currentSession = null;
       }
@@ -42,12 +42,6 @@ class VRButton {
 
       button.onclick = function () {
         if (currentSession === null) {
-          // WebXR's requestReferenceSpace only works if the corresponding feature
-          // was requested at session creation time. For simplicity, just ask for
-          // the interesting ones as optional features, but be aware that the
-          // requestReferenceSpace call will fail if it turns out to be unavailable.
-          // ('local' is always available for immersive sessions and doesn't need to
-          // be requested separately.)
 
           const sessionInit = {
             optionalFeatures: [
@@ -79,6 +73,7 @@ class VRButton {
       button.onclick = null;
     }
 
+    // WebVRはHMDのみにサポート
     function showWebXRNotFound() {
       disableButton();
 
@@ -134,7 +129,7 @@ class VRButton {
 
       if (window.isSecureContext === false) {
         message.href = document.location.href.replace(/^http:/, "https:");
-        message.innerHTML = "WEBXR NEEDS HTTPS"; // TODO Improve message
+        message.innerHTML = "WEBXR NEEDS HTTPS"; // WebXRではHTTPS通信が必須
       } else {
         message.href = "https://immersiveweb.dev/";
         message.innerHTML = "WebVR is not supported on your device";
@@ -152,8 +147,6 @@ class VRButton {
 
   static registerSessionGrantedListener() {
     if ("xr" in navigator) {
-      // WebXRViewer (based on Firefox) has a bug where addEventListener
-      // throws a silent exception and aborts execution entirely.
       if (/WebXRViewer\//i.test(navigator.userAgent)) return;
 
       navigator.xr.addEventListener("sessiongranted", () => {
