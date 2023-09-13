@@ -1,6 +1,6 @@
 import * as THREE from "/360VideoLiveWeb/build/three.module.js";
 import { OrbitControls } from "/360VideoLiveWeb/controls/OrbitControls.js";
-import { VRButton } from "./VRButton.js"; // VRButtonをインポート
+import { VRButton } from "./VRButton.js";
 
 let camera, scene, renderer;
 let video, texture, mesh, controls;
@@ -26,7 +26,6 @@ function init() {
 
   // カメラの注視点を設定（ビデオテクスチャの位置）
   camera.lookAt(0, 0, 0);
-  // camera.lookAt(scene.position);
 
   const geometry = new THREE.SphereBufferGeometry(500, 60, 40);
   geometry.scale(-1, 1, 1);
@@ -61,7 +60,7 @@ function init() {
   //   console.log("XR is supported.");
   // } else {
   //   console.log("XR is not supported.");
-  //   console.log("ユーザーの端末情報は、", navigator.userAgent);
+  //   console.log("ユーザーの端末情報は，", navigator.userAgent);
   // }
 
   animate();
@@ -83,7 +82,7 @@ async function connectToSora() {
   video.crossOrigin = "anonymous";
   video.loop = true;
   video.muted = false;
-  video.playsInline = true; // この行を追加しないとiOS Safariで動画が再生されない
+  video.playsInline = true; // この行を追加しないとiOSで動画が再生されない
 
   const debug = false;
   const sora = Sora.connection(
